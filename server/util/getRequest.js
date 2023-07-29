@@ -5,13 +5,15 @@ const getRequest = async (url, token) => {
     const options = {
         url: url,
         method: 'GET',
-        header: {
+        headers: {
             'Authorization': 'Bearer ' + token
         }
     };
 
     const response = await apiRequest(options);
-    return res.json(response);
+    return response;
 
 };
+
+module.exports = getRequest;
 
