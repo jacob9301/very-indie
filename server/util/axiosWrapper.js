@@ -14,8 +14,7 @@ const apiRequest = async (options) => {
 
     } catch (error) {
 
-        const message = 'HTTP request failed with status: ' + 
-            (error.status ? error.status : error.response.status);
+        const message = (error.status ? error.status : error.response.status);
         
         return {error: message};
     }

@@ -1,6 +1,6 @@
 class RandomPageSelector {
     constructor() {
-        this.max = 1001;
+        this.max = 951; //api doc is wrong - any offset over 951 if limit is 50 results in status 400
         this.pool = Array.from({ length: this.max }, (val, i) => i);
     }
 

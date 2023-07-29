@@ -34,16 +34,15 @@ const findArtists = async (baseURL, token, maxFollowers) => {
 
         const response = await getRequest(url, token);
 
-        console.log(offset, RandomPage.max, RandomPage.pool.length);
-
         if (response.error) {
-            if (offset === 0) {//first page empty
-                break;
-            }
-            RandomPage.setMax(offset);
+            return ({error: response.error});
         } else {
+            if (response.artists.items.length == 0) {//no results on page
+                RandomPage.setMax(offset);
+            } else {
             const merge = [...filteredArtists, ...filterArtists(response.artists.items, maxFollowers)];
             filteredArtists = merge;
+            }
         }
 
     }
