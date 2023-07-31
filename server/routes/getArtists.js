@@ -4,12 +4,12 @@ const RandomPageSelector = require('../util/RandomPageSelector.class');
 
 const baseURL = 'https://api.spotify.com/v1/search?q=';
 
-const filterArtists = (artists, maxFollowers) => {
+const filterArtists = (artists, max, min) => {
 
     const filteredArtists = [];
 
     for (let i = 0; i < artists.length; i++) {
-        if (artists[i].followers.total <= maxFollowers) {
+        if (min <= artists[i].followers.total && artists[i].followers.total < max) {
             filteredArtists.push(artists[i]);
         }
     }
@@ -18,7 +18,7 @@ const filterArtists = (artists, maxFollowers) => {
 
 }
 
-const findArtists = async (baseURL, token, maxFollowers) => {
+const findArtists = async (q, token, max, min) => {
 
     let filteredArtists = [];
 
@@ -30,7 +30,7 @@ const findArtists = async (baseURL, token, maxFollowers) => {
             break;
         }
 
-        const url = baseURL + offset;
+        const url = baseURL + q + offset;
 
         const response = await getRequest(url, token);
 
@@ -40,7 +40,7 @@ const findArtists = async (baseURL, token, maxFollowers) => {
             if (response.artists.items.length == 0) {//no results on page
                 RandomPage.setMax(offset);
             } else {
-            const merge = [...filteredArtists, ...filterArtists(response.artists.items, maxFollowers)];
+            const merge = [...filteredArtists, ...filterArtists(response.artists.items, max, min)];
             filteredArtists = merge;
             }
         }
@@ -62,11 +62,11 @@ const getArtists = async (req, res) => {
     const genre = genres[genreIndex];
 
     const q = 'genre%20' + genre + '&type=artist&market=GB&limit=50&offset=';
-    const url = baseURL + q;
 
-    const maxFollowers = parseInt(req.body.max, 10);
+    const max = parseInt(req.body.max, 10);
+    const min = parseInt(req.body.min, 10);
 
-    const filteredArtists = await findArtists(url, token, maxFollowers);
+    const filteredArtists = await findArtists(q, token, max, min);
 
     res.json(filteredArtists);
 

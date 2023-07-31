@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/gettoken', getToken);
 
+//move token to header
 app.post('/getgenres', getGenres);
 app.post('/getartists', getArtists);
 
