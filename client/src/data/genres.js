@@ -126,3 +126,5 @@ const genres = [
     "work-out",
     "world-music"
 ]
+
+export default genres;
