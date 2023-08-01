@@ -64,6 +64,6 @@ const handleSubmit = () => {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin: 0 10px;
+    margin: 0 5px;
 }
 </style>
