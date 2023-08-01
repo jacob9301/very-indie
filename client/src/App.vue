@@ -4,8 +4,10 @@ import SearchBar from './components/SearchBar.vue';
 
 <template>
   <header>
-    <h1>UA</h1>
-    <SearchBar />
+    <div id="logo">
+      <h1>UA</h1>
+    </div>
+    <SearchBar id="searchbar"/>
   </header>
 
   <main>
@@ -15,10 +17,11 @@ import SearchBar from './components/SearchBar.vue';
 
 <style scoped>
 header {
-  padding: 10px 40px;
+  padding: 10px 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 main {
@@ -29,5 +32,15 @@ main {
 header, main {
   background-color: var(--color-background-soft);
   border-radius: var(--border-radius);
+}
+
+#searchbar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+#logo {
+  padding: 10px 40px;
 }
 </style>

@@ -15,43 +15,55 @@ const selectedGenre = ref(0);
 const selectedFollowing = ref(followingSizes['0-1000']);
 
 const handleSubmit = () => {
-    const genreIndex = selectedGenre.value;
-    const minFollowing = selectedFollowing.value[0];
-    const maxFollowing = selectedFollowing.value[1];
-    console.log(genreIndex, minFollowing, maxFollowing);
-
-    store.submit();
+    if (!store.toSubmit) {
+        const genreIndex = selectedGenre.value;
+        const minFollowing = selectedFollowing.value[0];
+        const maxFollowing = selectedFollowing.value[1];
+        
+        store.setGenreIndex(genreIndex);
+        store.setMinFollowers(minFollowing);
+        store.setMaxFollowers(maxFollowing);
+        store.submit();
+    }
 }
 </script>
 
 <template>
   <div id="searchbar">
-
-    <form @submit.prevent="handleSubmit">
-
+    <div class="search-field">
         <label for="genre">Genre:</label>
         <select id="genre" v-model="selectedGenre">
             <option disabled value="">Please select a genre</option>
             <option v-for="(genre, index) in genres" :key="index" :value="index">{{ genre }}</option>
         </select>
+    </div>
 
+    <div class="search-field">
         <label for="following">following:</label>
         <select id="following" v-model="selectedFollowing">
             <option disabled value="">Please select a following size</option>
             <option v-for="(following, key) in followingSizes" :key="key" :value="following">{{ key }}</option>
         </select>
+    </div>
 
-        <button type="submit">Search</button>
-
-    </form>
+    <div class="search-field">
+        <button @click="handleSubmit">Search</button>
+    </div>
     
   </div>
 </template>
 
 <style scoped>
-#searchbar{
+#searchbar {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.search-field {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 10px;
 }
 </style>

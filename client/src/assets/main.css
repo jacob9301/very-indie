@@ -78,3 +78,7 @@ button:active, select:active {
   border: 1px solid var(--color-background-soft);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
+
+label {
+  font-size: 32px;
+}
