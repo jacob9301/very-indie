@@ -53,7 +53,7 @@ const findArtists = async (q, token, max, min) => {
 
 const getArtists = async (req, res) => {
 
-    const token = req.body.token;
+    const token = req.token;
 
     const genreIndex = parseInt(req.body.genreIndex, 10);
     if (genreIndex < 0 || genreIndex >= genres.length) {
