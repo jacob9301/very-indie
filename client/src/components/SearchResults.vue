@@ -8,6 +8,8 @@ const g = ref(0);
 const min = ref(0);
 const max = ref(0);
 
+const artists = ref([]);
+
 watch(store, async (newStore, old) => {
   if (newStore.toSubmit) {
     g.value = newStore.genreIndex;
@@ -16,6 +18,8 @@ watch(store, async (newStore, old) => {
 
     const response = await getArtists(newStore.genreIndex, newStore.minFollowers, newStore.maxFollowers);
     console.log(response.error ? 'SearchResults.vue: ' + response.error : response);
+
+    artists.value = response.error ? [] : response;
 
     newStore.submitHandled();
   }
@@ -28,10 +32,21 @@ onMounted(() => {
 
 
 <template>
-  <div>
-    <h1>{{ g + ' ' + min + ' ' + max }}</h1>
+  <div id="results-container" v-if="artists.length > 0">
+    <div class="result" v-for="(artist, index) in artists" :key="index">
+      <h2>{{ artist.name + ' (' + artist.followers.total + " followers)"}}</h2>
+      <img :src="artist.images[0] ? artist.images[0].url : '../../unknown.png'" >
+    </div>
   </div>
+  <h1 v-else>Nothing :P</h1>
 </template>
 
 <style scoped>
+
+.result {
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius);
+  padding: 10px;
+  margin: 10px;
+}
 </style>
