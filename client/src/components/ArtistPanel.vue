@@ -1,12 +1,15 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import getPreview from '../api/getPreview';
 
 const props = defineProps({artist: Object});
 
-const preview = ref([]);
+const preview = ref({});
 
 onMounted(async () => {
-  //preview.value = getPreview(props.artist.id);
+    if (props.artist.id) {
+        preview.value = await getPreview(props.artist.id);
+    }
 })
 
 </script>
@@ -17,8 +20,9 @@ onMounted(async () => {
         <img :src="props.artist.images[0] ? props.artist.images[0].url : '../../unknown.png'" >
         <div class="info">
             <h2>{{ props.artist.name + ' (' + props.artist.followers.total + " followers)"}}</h2>
-            <audio controls v-if="preview.length > 0">
-                <source :src="preview[0]" type="audio/mpeg">
+            <p>{{ preview.name }}</p>
+            <audio controls v-if="preview.is_playable">
+                <source :src="preview.preview_url" type="audio/mpeg">
             </audio>
             <h2 v-else>Preview Unavailable</h2>
         </div>

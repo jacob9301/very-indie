@@ -1,5 +1,5 @@
 const getAccessToken = (req, res, next) => {
-    const authHeader = req.headers['authorisation'];
+    const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
     if (token === undefined) {

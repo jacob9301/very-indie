@@ -12,7 +12,11 @@ const getPreview = async (req, res) => {
 
     const response = await getRequest(fullURL, token);
 
-    return response.tracks ? response.tracks : [];
+    if (response.tracks && response.tracks[0]) {
+        return res.json(response.tracks[0]);
+    } else {
+        return res.json({});
+    }
 }
 
 module.exports = getPreview;

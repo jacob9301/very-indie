@@ -37,7 +37,7 @@ export const apiPost = async (route, payload) => {
     const options = {
         method: 'POST',
         headers: {
-            'authorisation': ('Bearer ' + localStorage.getItem('ua_access_token')),
+            'authorization': ('Bearer ' + localStorage.getItem('ua_access_token')),
             'Content-type': 'application/json'
         },
         body: JSON.stringify(payload)

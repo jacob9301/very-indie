@@ -1,4 +1,4 @@
-import apiFetch, { apiPost } from "./fetchWrapper";
+import { apiPost } from "./fetchWrapper";
 
 const route = '/getpreview';
 
@@ -10,12 +10,7 @@ const getPreview = async (artistId) => {
 
     const response = await apiPost(route, payload);
 
-    if (response.error) {
-        console.log('getAPreview.js', response.error)
-        return {error: response.error};
-    } else {
-        return response;
-    }
+    return response;
 
 }
 
