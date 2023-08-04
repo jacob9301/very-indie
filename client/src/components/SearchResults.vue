@@ -3,6 +3,7 @@ import { ref, watch, onMounted } from 'vue';
 import { store } from '../store';
 import getToken from '../api/getToken';
 import getArtists from '../api/getArtists';
+import ArtistPanel from './ArtistPanel.vue';
 
 const g = ref(0);
 const min = ref(0);
@@ -34,8 +35,7 @@ onMounted(() => {
 <template>
   <div id="results-container" v-if="artists.length > 0">
     <div class="result" v-for="(artist, index) in artists" :key="index">
-      <h2>{{ artist.name + ' (' + artist.followers.total + " followers)"}}</h2>
-      <img :src="artist.images[0] ? artist.images[0].url : '../../unknown.png'" >
+      <ArtistPanel :artist="artist"/>
     </div>
   </div>
   <h1 v-else>Nothing :P</h1>

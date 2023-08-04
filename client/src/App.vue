@@ -27,7 +27,7 @@ header {
 
 main {
   margin-top: 10px;
-  padding: 10px 60px;
+  padding: 10px 10px;
 }
 
 header, main {
