@@ -1,6 +1,6 @@
 const baseURL = "http://localhost:5000";
 
-const apiFetch = async (route, options) => {
+const actuallyFetch = async (route, options) => {
 
     const fullURL = baseURL + route;
 
@@ -19,8 +19,32 @@ const apiFetch = async (route, options) => {
     } catch (err) {
         return {error: err};
     }
-
-
 }
 
-export default apiFetch;
+export const apiFetch = async (route) => {
+
+    const options = {
+        method: 'GET'
+    }
+
+    const result = await actuallyFetch(route, options);
+
+    return result;
+}
+
+export const apiPost = async (route, payload) => {
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'authorisation': ('Bearer ' + localStorage.getItem('ua_access_token')),
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    }
+
+    const result = await actuallyFetch(route, options);
+
+    return result;
+    
+}

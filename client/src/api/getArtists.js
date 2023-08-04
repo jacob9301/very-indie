@@ -1,4 +1,4 @@
-import apiFetch from "./fetchWrapper";
+import { apiPost } from "./fetchWrapper";
 
 const route = '/getartists';
 
@@ -10,16 +10,7 @@ const getArtists = async (genreIndex, minFollowers, maxFollowers) => {
         max: maxFollowers
     }
 
-    const options = {
-        method: 'POST',
-        headers: {
-            'authorisation': ('Bearer ' + localStorage.getItem('ua_access_token')),
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    }
-
-    const response = await apiFetch(route, options);
+    const response = await apiPost(route, payload);
 
     if (response.error) {
         console.log('getArtists.js', response.error)

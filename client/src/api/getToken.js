@@ -1,4 +1,4 @@
-import apiFetch from "./fetchWrapper";
+import { apiFetch } from "./fetchWrapper";
 
 const options = {
     method: 'GET'
@@ -8,7 +8,7 @@ const route = '/gettoken'
 
 const getToken = async () => {
     
-    const response = await apiFetch(route, options);
+    const response = await apiFetch(route);
 
     if (response.error) {
         console.log('getToken.js',response.error);
