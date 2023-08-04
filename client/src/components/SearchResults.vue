@@ -34,7 +34,7 @@ onMounted(() => {
 
 <template>
   <div id="results-container" v-if="artists.length > 0">
-    <div class="result" v-for="(artist, index) in artists" :key="index">
+    <div class="result" v-for="(artist, index) in artists" :key="artist.id">
       <ArtistPanel :artist="artist"/>
     </div>
   </div>

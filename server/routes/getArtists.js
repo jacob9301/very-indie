@@ -37,12 +37,12 @@ const findArtists = async (q, token, max, min) => {
         if (response.error) {
             return ({error: response.error});
         } else {
-            if (response.artists.items.length == 0) {//no results on page
-                RandomPage.setMax(offset);
-            } else {
+            //if (response.artists.items.length == 0) {//no results on page
+                //RandomPage.setMax(offset);
+            //} else {
             const merge = [...filteredArtists, ...filterArtists(response.artists.items, max, min)];
             filteredArtists = merge;
-            }
+            //}
         }
 
     }

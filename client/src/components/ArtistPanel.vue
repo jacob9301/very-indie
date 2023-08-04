@@ -21,9 +21,7 @@ onMounted(async () => {
         <div class="info">
             <h2>{{ props.artist.name + ' (' + props.artist.followers.total + " followers)"}}</h2>
             <p>{{ preview.name }}</p>
-            <audio controls v-if="preview.is_playable">
-                <source :src="preview.preview_url" type="audio/mpeg">
-            </audio>
+            <audio controls v-if="preview.preview_url" :key="preview.preview_url" :src="preview.preview_url" type="audio/mpeg"></audio>
             <h2 v-else>Preview Unavailable</h2>
         </div>
     </div>
@@ -44,6 +42,10 @@ onMounted(async () => {
     margin-left: 10px;
     text-align: center;
     flex-direction: column;
+}
+
+audio {
+    border-radius: var(--border-radius);
 }
 
 img {
