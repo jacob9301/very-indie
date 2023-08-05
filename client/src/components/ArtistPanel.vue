@@ -19,7 +19,11 @@ onMounted(async () => {
     <div class="panel">
         <img :src="props.artist.images[0] ? props.artist.images[0].url : '../../unknown.png'" >
         <div class="info">
-            <h2>{{ props.artist.name + ' (' + props.artist.followers.total + " followers)"}}</h2>
+            <div class="name">
+                <h2>{{ props.artist.name }}</h2>
+                <h2>{{ '(' + props.artist.followers.total + " followers)" }}</h2>
+            </div>
+            <p><a :href="props.artist.external_urls.spotify" target="_blank">open in spotify</a></p>
             <p>{{ preview.name }}</p>
             <audio controls v-if="preview.preview_url" :key="preview.preview_url" :src="preview.preview_url" type="audio/mpeg"></audio>
             <h2 v-else>Preview Unavailable</h2>
@@ -28,6 +32,14 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+h2 {
+    margin: 0 3px;
+}
+.name {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
 .panel {
     display: flex;
@@ -39,7 +51,7 @@ onMounted(async () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 10px;
+    margin: 0 10px;
     text-align: center;
     flex-direction: column;
 }
