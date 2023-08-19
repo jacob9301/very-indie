@@ -32,12 +32,17 @@ onMounted(() => {
 
 
 <template>
-  <div id="results-container" v-if="Object.keys(artists).length > 0">
-    <div class="result" v-for="(artist, id) in artists" :key="id">
-      <ArtistPanel :artist="artist"/>
-    </div>
+  <div v-if="store.toSubmit">
+    <p>test</p>
   </div>
-  <h1 v-else>Nothing :P</h1>
+  <div v-else>
+    <div id="results-container" v-if="Object.keys(artists).length > 0">
+      <div class="result" v-for="(artist, id) in artists" :key="id">
+        <ArtistPanel :artist="artist"/>
+      </div>
+    </div>
+    <h1 v-else>Nothing :P</h1>
+  </div>
 </template>
 
 <style scoped>
