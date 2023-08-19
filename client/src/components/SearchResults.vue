@@ -9,18 +9,17 @@ const g = ref(0);
 const min = ref(0);
 const max = ref(0);
 
-const artists = ref([]);
+const artists = ref({});
 
-watch(store, async (newStore, old) => {
+watch(store, async (newStore) => {
   if (newStore.toSubmit) {
     g.value = newStore.genreIndex;
     min.value = newStore.minFollowers;
     max.value = newStore.maxFollowers;
 
     const response = await getArtists(newStore.genreIndex, newStore.minFollowers, newStore.maxFollowers);
-    console.log(response.error ? 'SearchResults.vue: ' + response.error : response);
 
-    artists.value = response.error ? [] : response;
+    artists.value = response.error ? {} : response;
 
     newStore.submitHandled();
   }
@@ -33,8 +32,8 @@ onMounted(() => {
 
 
 <template>
-  <div id="results-container" v-if="artists.length > 0">
-    <div class="result" v-for="(artist, index) in artists" :key="artist.id">
+  <div id="results-container" v-if="Object.keys(artists).length > 0">
+    <div class="result" v-for="(artist, id) in artists" :key="id">
       <ArtistPanel :artist="artist"/>
     </div>
   </div>

@@ -4,45 +4,50 @@ const RandomPageSelector = require('../util/RandomPageSelector.class');
 
 const baseURL = 'https://api.spotify.com/v1/search?q=';
 
-const filterArtists = (artists, max, min) => {
-
-    const filteredArtists = [];
+const filterArtists = (artists, filteredArtists, max, min) => {
 
     for (let i = 0; i < artists.length; i++) {
-        if (min <= artists[i].followers.total && artists[i].followers.total < max) {
-            filteredArtists.push(artists[i]);
+        let followers = artists[i].followers.total;
+        if ((min <= followers) && (followers < max) && (filteredArtists[artists[i].id] === undefined)) {
+            console.log(artists[i].name);
+            filteredArtists[artists[i].id] = artists[i];
         }
     }
-
-    return filteredArtists;
 
 }
 
 const findArtists = async (q, token, max, min) => {
 
-    let filteredArtists = [];
+    let filteredArtists = {};
 
     const RandomPage = new RandomPageSelector();
 
-    while (filteredArtists < 10) {
-        const offset = RandomPage.getRandomPage();
-        if (offset === -1) {//no more unvisited pages
+    while (Object.keys(filteredArtists).length < 10) {
+        const index = RandomPage.getRandomPageIndex();
+        
+        
+        if (index == -1) {//no more unvisited pages
             break;
         }
 
+        const offset = RandomPage.pool[index];
+
         const url = baseURL + q + offset;
+        console.log(url);
 
         const response = await getRequest(url, token);
 
         if (response.error) {
             return ({error: response.error});
         } else {
-            //if (response.artists.items.length == 0) {//no results on page
-                //RandomPage.setMax(offset);
-            //} else {
-            const merge = [...filteredArtists, ...filterArtists(response.artists.items, max, min)];
-            filteredArtists = merge;
-            //}
+            if (response.artists.items.length == 0) {//no results on page
+                RandomPage.setMax(offset);
+                console.log('new max');
+                continue;
+            }
+            console.log(offset);
+            filterArtists(response.artists.items, filteredArtists, max, min);
+            RandomPage.removePageAtIndex(index);
         }
 
     }

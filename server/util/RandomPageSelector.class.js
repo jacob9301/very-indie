@@ -4,23 +4,42 @@ class RandomPageSelector {
         this.pool = Array.from({ length: this.max }, (val, i) => i);
     }
 
-    getRandomPage() {
-        if (this.pool.length === 0) {
+    findIndexOf(x, start, end) {
+        if (start > end) return -1;
+
+        let mid = Math.floor((start + end)/2);
+
+        if (this.pool[mid] == x) return mid;
+
+        if (this.pool[mid] > x) 
+            return this.findIndexOf(x, start, mid-1);
+        else 
+            return this.findIndexOf(x, mid+1, end);
+
+    }
+
+    getRandomPageIndex() {
+        if (this.pool.length < 1) {
             return -1;
         }
 
         const randomIndex = Math.floor(Math.random() * this.pool.length);
-        const randomNumber = this.pool[randomIndex];
 
-        this.pool.splice(randomIndex, 1);
+        return randomIndex;
+    }
 
-        return randomNumber;
+    removePageAtIndex(index) {
+        this.pool.splice(index, 1);
     }
 
     setMax(newMax) {
         if (newMax < this.max) {
-            this.pool = this.pool.filter((num) => num < newMax);
-            this.max = newMax;
+            let index = this.findIndexOf(newMax, 0, this.pool.length-1);
+
+            if (index > -1) {
+                this.pool.splice(index);
+                this.max = newMax;
+            }
         }
     }
 }
