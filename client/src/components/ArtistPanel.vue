@@ -23,7 +23,7 @@ onMounted(async () => {
                 <h2>{{ props.artist.name }}</h2>
                 <h2>{{ '(' + props.artist.followers.total + " followers)" }}</h2>
             </div>
-            <p><a :href="props.artist.external_urls.spotify" target="_blank">open in spotify</a></p>
+            <button class="link"><a :href="props.artist.external_urls.spotify" target="_blank">open in spotify</a></button>
             <p>{{ preview.name }}</p>
             <audio controls v-if="preview.preview_url" :key="preview.preview_url" :src="preview.preview_url" type="audio/mpeg"></audio>
             <h2 v-else>Preview Unavailable</h2>
@@ -32,6 +32,15 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+a {
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.link {
+    background-color: #1DB954;
+}
+
 h2 {
     margin: 0 3px;
 }

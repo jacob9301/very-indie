@@ -4,6 +4,7 @@ import { store } from '../store';
 import getToken from '../api/getToken';
 import getArtists from '../api/getArtists';
 import ArtistPanel from './ArtistPanel.vue';
+import LoadingIcon from './LoadingIcon.vue';
 
 const g = ref(0);
 const min = ref(0);
@@ -33,7 +34,7 @@ onMounted(() => {
 
 <template>
   <div v-if="store.toSubmit">
-    <p>test</p>
+    <LoadingIcon></LoadingIcon>
   </div>
   <div v-else>
     <div id="results-container" v-if="Object.keys(artists).length > 0">
@@ -46,7 +47,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
 .result {
   background-color: var(--color-background-light);
   border-radius: var(--border-radius);
