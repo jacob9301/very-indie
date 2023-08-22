@@ -1,9 +1,5 @@
 import { apiFetch } from "./fetchWrapper";
 
-const options = {
-    method: 'GET'
-}
-
 const route = '/gettoken'
 
 const getToken = async () => {

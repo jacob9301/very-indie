@@ -18,7 +18,12 @@ watch(store, async (newStore) => {
     min.value = newStore.minFollowers;
     max.value = newStore.maxFollowers;
 
-    const response = await getArtists(newStore.genreIndex, newStore.minFollowers, newStore.maxFollowers);
+    let response = await getArtists(newStore.genreIndex, newStore.minFollowers, newStore.maxFollowers);
+
+    if (response.error == 401) {
+      await getToken();
+      response = await getArtists(newStore.genreIndex, newStore.minFollowers, newStore.maxFollowers);
+    }
 
     artists.value = response.error ? {} : response;
 

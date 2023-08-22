@@ -17,13 +17,13 @@ onMounted(async () => {
 
 <template>
     <div class="panel">
-        <img :src="props.artist.images[0] ? props.artist.images[0].url : '../../unknown.png'" >
+        <img class="artist-image" :src="props.artist.images[0] ? props.artist.images[0].url : '../../unknown.png'" >
         <div class="info">
             <div class="name">
                 <h2>{{ props.artist.name }}</h2>
                 <h2>{{ '(' + props.artist.followers.total + " followers)" }}</h2>
             </div>
-            <button class="link"><a :href="props.artist.external_urls.spotify" target="_blank">open in spotify</a></button>
+            <button class="link"><a :href="props.artist.external_urls.spotify" target="_blank"><img class="spotify-logo" src="/Spotify_Icon_RGB_White.png" >Open in spotify</a></button>
             <p>{{ preview.name }}</p>
             <audio controls v-if="preview.preview_url" :key="preview.preview_url" :src="preview.preview_url" type="audio/mpeg"></audio>
             <h2 v-else>Preview Unavailable</h2>
@@ -35,6 +35,9 @@ onMounted(async () => {
 a {
     text-decoration: none;
     color: var(--color-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .link {
@@ -69,7 +72,12 @@ audio {
     border-radius: var(--border-radius);
 }
 
-img {
+.spotify-logo {
+    height: 35px;
+    margin-right: 5px;
+}
+
+.artist-image {
     height: 400px;
     width: 400px;
     border-radius: var(--border-radius);
@@ -82,7 +90,7 @@ img {
         align-items: center;
     }
 
-    img {
+    .artist-image {
         height: 200px;
         width: 200px;
     }
