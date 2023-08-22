@@ -9,7 +9,6 @@ const filterArtists = (artists, filteredArtists, max, min) => {
     for (let i = 0; i < artists.length; i++) {
         let followers = artists[i].followers.total;
         if ((min <= followers) && (followers < max) && (filteredArtists[artists[i].id] === undefined)) {
-            console.log(artists[i].name);
             filteredArtists[artists[i].id] = artists[i];
         }
     }
@@ -33,7 +32,6 @@ const findArtists = async (q, token, max, min) => {
         const offset = RandomPage.pool[index];
 
         const url = baseURL + q + offset;
-        console.log(url);
 
         const response = await getRequest(url, token);
 
@@ -42,10 +40,8 @@ const findArtists = async (q, token, max, min) => {
         } else {
             if (response.artists.items.length == 0) {//no results on page
                 RandomPage.setMax(offset);
-                console.log('new max');
                 continue;
             }
-            console.log(offset);
             filterArtists(response.artists.items, filteredArtists, max, min);
             RandomPage.removePageAtIndex(index);
         }

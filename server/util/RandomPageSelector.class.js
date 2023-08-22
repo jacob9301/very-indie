@@ -11,10 +11,8 @@ class RandomPageSelector {
 
         if (this.pool[mid] == x) return mid;
 
-        if (this.pool[mid] > x) 
-            return this.findIndexOf(x, start, mid-1);
-        else 
-            return this.findIndexOf(x, mid+1, end);
+        if (this.pool[mid] > x) return this.findIndexOf(x, start, mid-1);
+        else return this.findIndexOf(x, mid+1, end);
 
     }
 
